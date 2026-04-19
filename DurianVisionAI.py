@@ -51,7 +51,7 @@ st.divider()
 
 # Option 1: Demo
 if run_demo:
-    sample_path = "samples/demo_image.jpg"
+    sample_path = "demo_image.jpg"
 
     if os.path.exists(sample_path):  # check if demo image exists
         st.success("Running demonstration with sample dataset...")
