@@ -22,6 +22,30 @@ For optimal feature extraction and model accuracy, images should be captured adh
 - **Web Framework:** Streamlit
 - **Language:** Python 3.11
 
+## Model Evaluation & Metrics
+The model was fine-tuned and validated using a custom dataset, achieving high precision and reliability:
+
+| Metric | Value | Description |
+| :--- | :--- | :--- |
+| **Precision** | 95.7% | Accuracy of the positive detections. |
+| **Recall** | 91.6% | Ability to identify all durians in the frame. |
+| **mAP50** | 0.959 | Mean Average Precision at 0.5 IoU threshold. |
+
+### Performance Analysis
+To ensure technical transparency, the following evaluation curves were generated during the validation phase:
+
+| Precision-Recall Curve | F1 Score Curve |
+| :---: | :---: |
+| ![PR Curve](./evaluation/BoxPR_curve.png) | ![F1 Curve](./evaluation/BoxF1_curve.png) |
+
+#### Confusion Matrix
+The matrix below illustrates the model's high success rate in distinguishing durians from complex background foliage.
+![Confusion Matrix](./evaluation/confusion_matrix.png)
+
+### 🖼️ Detection Preview
+Example of the AI successfully identifying durians from the validation set:
+![Detection Sample](./evaluation/val_batch0_labels.jpg)
+
 ## 📂 Project Structure
 ```text
 ├── DurianVisionAI.py     # Main Streamlit application script
@@ -29,4 +53,5 @@ For optimal feature extraction and model accuracy, images should be captured adh
 ├── requirements.txt      # Python dependencies
 ├── demo_image.jpg        # Default image for the interactive demo
 ├── sample_images/        # Directory containing test images for evaluation
+├── evaluation/           # Directory containing evaluation result
 └── README.md             # Project documentation
