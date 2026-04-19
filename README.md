@@ -31,18 +31,18 @@ The model was fine-tuned and validated using a custom dataset, achieving high pr
 | **Recall** | 91.6% | Ability to identify all durians in the frame. |
 | **mAP50** | 0.959 | Mean Average Precision at 0.5 IoU threshold. |
 
-### Performance Analysis
+## Performance Analysis
 To ensure technical transparency, the following evaluation curves were generated during the validation phase:
 
 | Precision-Recall Curve | F1 Score Curve |
 | :---: | :---: |
 | ![PR Curve](./evaluation/BoxPR_curve.png) | ![F1 Curve](./evaluation/BoxF1_curve.png) |
 
-#### Confusion Matrix
+## Confusion Matrix
 The matrix below illustrates the model's high success rate in distinguishing durians from complex background foliage.
 ![Confusion Matrix](./evaluation/confusion_matrix.png)
 
-### 🖼️ Detection Preview
+## Detection Preview
 Example of the AI successfully identifying durians from the validation set:
 ![Detection Sample](./evaluation/val_batch0_labels.jpg)
 
