@@ -2,7 +2,7 @@
 
 **DurianVision AI** is an end-to-end computer vision web application designed to automate the detection and counting of durians in orchard environments. Built with YOLOv8, this tool assists farmers and agricultural analysts in estimating crop yields quickly and accurately.
 
-🚀 **Live Demo:** [Click here to try the app](https://durian-vision-ai.streamlit.app/)
+🚀 **Live Web App:** [Click here to try the app](https://durian-vision-ai.streamlit.app/)
 
 ---
 
