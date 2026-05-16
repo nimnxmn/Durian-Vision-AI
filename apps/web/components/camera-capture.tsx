@@ -17,7 +17,6 @@ export function CameraCapture({ onCapture }: Props) {
 
   useEffect(() => {
     return () => stopStream();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function stopStream() {
