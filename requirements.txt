@@ -1,5 +1,7 @@
-ultralytics
-streamlit
-opencv-python-headless
-pillow
-numpy
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.27
+ultralytics>=8.3
+opencv-python-headless>=4.10
+pillow>=10
+numpy>=1.26
