@@ -1,57 +1,87 @@
-# DurianVision AI 
-
-**DurianVision AI** is an end-to-end computer vision web application designed to automate the detection and counting of durians in orchard environments. Built with YOLOv8, this tool assists farmers and agricultural analysts in estimating crop yields quickly and accurately.
-
-🚀 **Live Web App:** [Click here to try the app](https://durian-vision-ai.streamlit.app/)
-
+---
+title: DurianVision AI
+emoji: 🌿
+colorFrom: yellow
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+short_description: Count durians from canopy photos with a custom YOLOv8 model.
 ---
 
-## Features
-- **Automatic Detection:** Accurately identifies and bounds multiple durians within a single image.
-- **One-Click Demo:** Integrated sample dataset allowing users to test the AI instantly without uploading their own images.
-- **Batch Processing:** Supports multiple simultaneous image uploads for bulk analysis.
-- **Yield Analytics:** Provides individual image detection counts and aggregates total cumulative detections.
+# DurianVision AI
 
-## Data Acquisition Constraints (Best Practices)
-For optimal feature extraction and model accuracy, images should be captured adhering to the following conditions:
-- **Perspective:** Captured from a **nadir-to-canopy** angle (standing directly beneath the tree and looking upwards).
-- **Lighting:** Sufficient natural daylight to ensure fruit features are clearly distinguishable from the background foliage.
+End-to-end durian detection and counting from a single canopy photo. Custom-trained YOLOv8 model wrapped in a FastAPI backend with a Next.js + shadcn/ui frontend.
 
-## Tech Stack
-- **AI/Computer Vision:** YOLOv8 (Ultralytics), OpenCV, PIL
-- **Web Framework:** Streamlit
-- **Language:** Python 3.11
+- **Precision:** 95.7% · **Recall:** 91.6% · **mAP50:** 0.959
+- **Inference:** ~66 ms per image on CPU
+- **Dataset:** 2,800+ annotated durian instances, augmented for canopy occlusion
 
-## Model Evaluation & Metrics
-The model was fine-tuned and validated using a custom dataset, achieving high precision and reliability:
+## Stack
 
-| Metric | Value | Description |
-| :--- | :--- | :--- |
-| **Precision** | 95.7% | Accuracy of the positive detections. |
-| **Recall** | 91.6% | Ability to identify all durians in the frame. |
-| **mAP50** | 0.959 | Mean Average Precision at 0.5 IoU threshold. |
+| Layer | Tech |
+|---|---|
+| Model | YOLOv8 (Ultralytics), trained on Roboflow |
+| Backend | FastAPI, uvicorn, Pillow, OpenCV (headless) |
+| Frontend | Next.js 16 (App Router, static export), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, next-themes |
+| Container | Multi-stage Docker → single image |
+| Deploy | Hugging Face Spaces (Docker runtime, port 7860) |
 
-## Performance Analysis
-To ensure technical transparency, the following evaluation curves were generated during the validation phase:
+## Architecture
 
-| Precision-Recall Curve | F1 Score Curve |
-| :---: | :---: |
-| ![PR Curve](./evaluation/BoxPR_curve.png) | ![F1 Curve](./evaluation/BoxF1_curve.png) |
+```
+Browser  ──HTTP──▶  FastAPI (port 7860)
+                      ├── GET  /              → static Next.js export
+                      ├── GET  /api/health    → {model_loaded: true, ...}
+                      └── POST /api/detect    → {count, detections[], image_base64, ...}
+                            └─ YOLOv8 inference
+```
 
-## Confusion Matrix
-The matrix below illustrates the model's high success rate in distinguishing durians from complex background foliage.
-![Confusion Matrix](./evaluation/confusion_matrix.png)
+In dev there are two processes (Next dev server on `:3000`, uvicorn on `:8000`). In production a single Docker container serves both the API and the pre-built frontend on port 7860.
 
-## Detection Preview
-Example of the AI successfully identifying durians from the validation set:
-![Detection Sample](./evaluation/val_batch0_labels.jpg)
+## Run locally (dev)
 
-## 📂 Project Structure
-```text
-├── DurianVisionAI.py     # Main Streamlit application script
-├── best.pt               # Fine-tuned YOLOv8 model weights
-├── requirements.txt      # Python dependencies
-├── demo_image.jpg        # Default image for the interactive demo
-├── sample_images/        # Directory containing test images for evaluation
-├── evaluation/           # Directory containing evaluation result
-└── README.md             # Project documentation
+Backend:
+```powershell
+python -m uvicorn apps.api.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Frontend:
+```powershell
+cd apps/web
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000>.
+
+## Build and run the production container
+
+```bash
+docker build -t durianvision .
+docker run --rm -p 7860:7860 durianvision
+```
+
+Open <http://localhost:7860>.
+
+## Project layout
+
+```
+apps/
+  api/                 FastAPI backend (see CLAUDE.md)
+  web/                 Next.js frontend
+    app/               App Router pages
+    components/        Controls, ResultCard, ThemeToggle, ui/* (shadcn)
+    lib/api.ts         Backend contract + fetch helper
+docs/                  Phase walkthroughs (1–7)
+model/best.pt          YOLOv8 weights
+demo-image/demo.jpg    Demo image (49 durians)
+Dockerfile             Multi-stage build (node → python)
+```
+
+See `docs/phase-N-walkthrough.md` for student-friendly explanations of each phase.
+
+## License
+
+MIT.
