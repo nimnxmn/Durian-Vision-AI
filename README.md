@@ -1,6 +1,6 @@
 ---
 title: DurianVision AI
-emoji: 🌿
+emoji: 🌲
 colorFrom: yellow
 colorTo: green
 sdk: docker
@@ -20,13 +20,13 @@ End-to-end durian detection and counting from a single canopy photo. Custom-trai
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
-| Model | YOLOv8 (Ultralytics), trained on Roboflow |
-| Backend | FastAPI, uvicorn, Pillow, OpenCV (headless) |
-| Frontend | Next.js 16 (App Router, static export), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, next-themes |
-| Container | Multi-stage Docker → single image |
-| Deploy | Hugging Face Spaces (Docker runtime, port 7860) |
+| Layer     | Tech                                                                                                  |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| Model     | YOLOv8 (Ultralytics), trained on Roboflow                                                             |
+| Backend   | FastAPI, uvicorn, Pillow, OpenCV (headless)                                                           |
+| Frontend  | Next.js 16 (App Router, static export), React 19, TypeScript, Tailwind CSS v4, shadcn/ui, next-themes |
+| Container | Multi-stage Docker → single image                                                                     |
+| Deploy    | Hugging Face Spaces (Docker runtime, port 7860)                                                       |
 
 ## Architecture
 
@@ -43,11 +43,13 @@ In dev there are two processes (Next dev server on `:3000`, uvicorn on `:8000`).
 ## Run locally (dev)
 
 Backend:
+
 ```powershell
 python -m uvicorn apps.api.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 Frontend:
+
 ```powershell
 cd apps/web
 npm install
@@ -74,9 +76,9 @@ apps/
     app/               App Router pages
     components/        Controls, ResultCard, ThemeToggle, ui/* (shadcn)
     lib/api.ts         Backend contract + fetch helper
-docs/                  Phase walkthroughs (1–7)
+docs/                  Phase walkthroughs (1–6)
 model/best.pt          YOLOv8 weights
-demo-image/demo.jpg    Demo image (49 durians)
+demo-image/               Demo image
 Dockerfile             Multi-stage build (node → python)
 ```
 
