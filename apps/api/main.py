@@ -1,6 +1,9 @@
 from contextlib import asynccontextmanager
 
+import pi_heif
 from fastapi import FastAPI
+
+pi_heif.register_heif_opener()
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
