@@ -1,9 +1,12 @@
 from contextlib import asynccontextmanager
 
-import pi_heif
 from fastapi import FastAPI
 
-pi_heif.register_heif_opener()
+try:
+    import pi_heif
+    pi_heif.register_heif_opener()
+except Exception:
+    pass
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
