@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 2,800+ annotated instances (inference: ~527 ms on CPU).
+DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 2,800+ annotated instances.
 
 **Target audience:** Portfolio / demo viewers (recruiters, judges).
 
@@ -42,7 +42,7 @@ DurianVision AI is a portfolio-grade web app for automated durian detection and 
 
 **HF Spaces state — `nimnxmn/DurianVisionAI`:**
 - Running on cpu-basic free tier, port 7860
-- Inference: ~527 ms per image at 640px resize
+- Inference: varies on CPU (640px resize)
 - HEIC/iPhone photos supported via `pi-heif` + `libheif1`
 - `hfspace` git remote: `https://huggingface.co/spaces/nimnxmn/DurianVisionAI`
 
