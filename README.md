@@ -12,10 +12,12 @@ short_description: Count durians from canopy photos with a custom YOLOv8 model.
 
 # DurianVision AI
 
+**Live demo:** https://huggingface.co/spaces/nimnxmn/DurianVisionAI
+
 End-to-end durian detection and counting from a single canopy photo. Custom-trained YOLOv8 model wrapped in a FastAPI backend with a Next.js + shadcn/ui frontend.
 
 - **Precision:** 95.7% · **Recall:** 91.6% · **mAP50:** 0.959
-- **Inference:** ~66 ms per image on CPU
+- **Inference:** ~527 ms per image on CPU
 - **Dataset:** 2,800+ annotated durian instances, augmented for canopy occlusion
 
 ## Stack
