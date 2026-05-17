@@ -34,10 +34,7 @@ async def detect(
 
     try:
         return run_detection(data, conf=conf, iou=iou)
-    except UnidentifiedImageError as e:
-        raise HTTPException(
-            status_code=415,
-            detail=f"Could not decode image (content_type={file.content_type}, size={len(data)}, err={e})",
-        )
+    except UnidentifiedImageError:
+        raise HTTPException(status_code=415, detail="Could not decode image.")
     except FileNotFoundError as exc:
         raise HTTPException(status_code=503, detail=str(exc))
