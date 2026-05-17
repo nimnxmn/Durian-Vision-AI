@@ -14,10 +14,11 @@ short_description: Count durians from canopy photos with a custom YOLOv8 model.
 
 **Live demo:** https://huggingface.co/spaces/nimnxmn/DurianVisionAI
 
+![DurianVision AI screenshot](docs/screenshot.png)
+
 End-to-end durian detection and counting from a single canopy photo. Upload a photo taken from beneath the tree looking up — the app draws bounding boxes around every durian and gives you an exact count.
 
 - **Precision:** 95.7% · **Recall:** 91.6% · **mAP50:** 0.959
-- **Inference:** ~527 ms per image on CPU (HF Spaces free tier)
 - **Dataset:** 2,800+ annotated durian instances, augmented for canopy occlusion
 - **Supports:** JPEG, PNG, HEIC (iPhone photos)
 
@@ -32,7 +33,6 @@ Images must be taken from a **nadir-to-canopy perspective** — camera positione
 | Precision | 95.7% |
 | Recall | 91.6% |
 | mAP50 | 0.959 |
-| Inference (CPU) | ~527 ms |
 
 <p align="center">
   <img src="evaluation/BoxPR_curve.png" width="45%" alt="PR Curve"/>
