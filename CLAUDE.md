@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 2,800+ annotated instances (inference: ~66 ms).
+DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 2,800+ annotated instances (inference: ~527 ms on CPU).
 
 **Target audience:** Portfolio / demo viewers (recruiters, judges).
 
@@ -21,12 +21,30 @@ DurianVision AI is a portfolio-grade web app for automated durian detection and 
 | 2 | Next.js frontend (ugly MVP) | ✅ Done |
 | 3 | Core features (sliders, batch, downloads) | ✅ Done |
 | 4 | Visual redesign (shadcn, theming, polish) | ✅ Done |
-| 5 | Docker + Hugging Face Spaces deploy | ✅ Done |
+| 5 | Docker image (multi-stage build, runs locally on `:7860`) | ✅ Done |
 | 6 | Stretch (camera, tests, CI) | ✅ Done |
 | 7 | Post-launch polish (data-URL bug fix, demo image button, batch summary + grid layout) | ✅ Done |
+| 8 | Git history setup (v2 branch, PR #1 merged to main, `streamlit-v1` tag) | ✅ Done |
+| 9 | Hugging Face Spaces deploy | ✅ Done |
 
+**Live URL:** https://huggingface.co/spaces/nimnxmn/DurianVisionAI
 **Full plan:** `.claude/plans/how-can-i-improve-pure-eagle.md`
-**Phase walkthroughs:** `docs/phase-1-walkthrough.md`
+**Phase walkthroughs:** `docs/phase-1-walkthrough.md` through `docs/phase-7-walkthrough.md`
+
+---
+
+## Where we left off (2026-05-17)
+
+**GitHub state — `nimnxmn/Durian-Vision-AI`:**
+- `main` branch — fully deployed, synced with HF Spaces
+- `streamlit-v1` tag — points at the last Streamlit commit, recoverable via `git checkout streamlit-v1`
+- Binary files (images, model weights) tracked with Git LFS — run `git lfs pull` after cloning
+
+**HF Spaces state — `nimnxmn/DurianVisionAI`:**
+- Running on cpu-basic free tier, port 7860
+- Inference: ~527 ms per image at 640px resize
+- HEIC/iPhone photos supported via `pi-heif` + `libheif1`
+- `hfspace` git remote: `https://huggingface.co/spaces/nimnxmn/DurianVisionAI`
 
 ---
 
@@ -60,13 +78,13 @@ apps/api/
 **Request flow:**
 1. Upload lands at `routes/detect.py` — validates type, size, conf/iou range
 2. Calls `services/inference.py::run_detection(bytes, conf, iou)`
-3. PIL opens image → resize to 1280px long edge → `model.predict()`
+3. PIL opens image → resize to 640px long edge → `model.predict()`
 4. Boxes converted from center-xywh → top-left-xywh
 5. `result.plot()` draws boxes → base64 PNG → packed into `DetectResponse`
 
-### Frontend (Next.js) — `apps/web/` ⏳ Not built yet
+### Frontend (Next.js) — `apps/web/`
 
-Will be: Next.js 14 App Router, TypeScript, Tailwind CSS, shadcn/ui.
+Next.js 16 App Router, TypeScript, Tailwind CSS v4, shadcn/ui, next-themes.
 In production, FastAPI serves the static Next.js export from `apps/web/out/`.
 
 ### Deployment target
@@ -78,7 +96,7 @@ FastAPI binds to port 7860. Serves API at `/api/*` and Next.js SPA at `/`.
 
 ## Setup & Running
 
-### Backend (already works)
+### Backend
 
 ```bash
 pip install -r requirements.txt
@@ -96,11 +114,12 @@ curl -s -X POST http://127.0.0.1:8000/api/detect \
   -F "conf=0.25" -F "iou=0.5"
 ```
 
-### Frontend (Phase 2 — not started)
+### Frontend
 
 Requires Node.js (LTS) installed first. Then:
 ```bash
 cd apps/web
+npm install
 npm run dev   # starts on localhost:3000
 ```
 
