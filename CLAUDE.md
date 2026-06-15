@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 2,800+ annotated instances.
+DurianVision AI is a portfolio-grade web app for automated durian detection and counting from orchard images using a custom-trained YOLOv8 model. The model achieves 95.7% Precision, 91.6% Recall, and mAP50 of 0.959, trained on 958 hand-labeled boxes across 38 canopy photos (augmented 3× to 114 training images).
 
 **Target audience:** Portfolio / demo viewers (recruiters, judges).
 
