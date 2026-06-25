@@ -1,17 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Sprout, Upload } from "lucide-react";
 
 import { Controls } from "@/components/controls";
 import { ResultCard } from "@/components/result-card";
 import { ThemeToggle } from "@/components/theme-toggle";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { detectImage, type DetectResponse } from "@/lib/api";
 
 type Item = {
@@ -112,7 +106,7 @@ export default function Home() {
       <header className="border-b">
         <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span aria-hidden className="text-2xl">🌲</span>
+            <Sprout className="size-6 text-primary" aria-hidden />
             <span className="font-semibold tracking-tight">DurianVision AI</span>
           </div>
           <ThemeToggle />
@@ -125,10 +119,10 @@ export default function Home() {
             Count durians from a single canopy photo.
           </h1>
           <p className="text-muted-foreground max-w-2xl">
-            A custom YOLOv8 model (95.7% precision, 91.6% recall, ~66 ms
-            inference) trained on 2,800+ annotated instances. Upload a
-            nadir-to-canopy orchard image and the model returns counts,
-            bounding boxes, and an annotated preview.
+            A YOLOv8 model trained on 2,800+ annotated instances — 95.7%
+            precision, 91.6% recall, ~66 ms per image. Drop a nadir-view
+            orchard photo and get back bounding boxes, counts, and an annotated
+            preview.
           </p>
         </section>
 
@@ -182,28 +176,19 @@ export default function Home() {
         )}
 
         {items.length === 0 && (
-          <Card className="border-dashed bg-muted/30">
-            <CardHeader>
-              <CardTitle>No results yet</CardTitle>
-              <CardDescription>
-                Pick one or more images above to get started. The model works
-                best on photos taken from below the tree looking straight up.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Tip: try multiple images at once to see batch detection in
-              action.
-            </CardContent>
-          </Card>
+          <div className="flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-border/60 py-16 text-center">
+            <Upload className="size-10 text-muted-foreground/50" />
+            <div>
+              <p className="font-medium">Ready when you are</p>
+              <p className="mt-1 mx-auto max-w-xs text-sm text-muted-foreground">
+                Works best with photos taken directly below the canopy looking
+                straight up.
+              </p>
+            </div>
+          </div>
         )}
 
-        <div
-          className={
-            items.length > 1
-              ? "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
-              : "flex flex-col gap-4"
-          }
-        >
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {items.map((it) => (
             <ResultCard
               key={it.id}

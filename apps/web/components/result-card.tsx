@@ -25,22 +25,38 @@ export function ResultCard({ fileName, status, result, error }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="break-all">{fileName}</CardTitle>
-        <CardDescription>
-          {status === "loading" && "Detecting..."}
-          {status === "done" && result && (
-            <>
-              <span className="font-medium text-foreground">
-                {result.count} durians
-              </span>{" "}
-              · {result.inference_ms.toFixed(1)} ms ·{" "}
-              {result.image_size[0]}×{result.image_size[1]}
-            </>
-          )}
-          {status === "error" && (
-            <span className="text-destructive">Failed</span>
-          )}
-        </CardDescription>
+        {status === "done" && result ? (
+          <>
+            <p className="sr-only">
+              {result.count} durian{result.count === 1 ? "" : "s"}
+            </p>
+            <div aria-hidden="true" className="flex items-baseline gap-1.5">
+              <span className="text-4xl font-bold tabular-nums leading-none">
+                {result.count}
+              </span>
+              <span className="text-lg font-medium text-muted-foreground">
+                durian{result.count === 1 ? "" : "s"}
+              </span>
+            </div>
+            <CardDescription className="flex items-center justify-between gap-2">
+              <span className="truncate">{fileName}</span>
+              <span className="shrink-0 tabular-nums">
+                {result.inference_ms.toFixed(1)} ms · {result.image_size[0]}×
+                {result.image_size[1]}
+              </span>
+            </CardDescription>
+          </>
+        ) : (
+          <>
+            <CardTitle className="break-all">{fileName}</CardTitle>
+            <CardDescription>
+              {status === "loading" && "Detecting..."}
+              {status === "error" && (
+                <span className="text-destructive">Failed</span>
+              )}
+            </CardDescription>
+          </>
+        )}
       </CardHeader>
 
       <CardContent className="flex flex-col gap-3">
