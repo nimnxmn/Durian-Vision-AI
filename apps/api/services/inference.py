@@ -4,9 +4,8 @@ import base64
 import io
 import time
 
-import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from apps.api.config import MAX_LONG_EDGE
 from apps.api.schemas import Detection, DetectResponse
@@ -52,12 +51,18 @@ def run_detection(image_bytes: bytes, conf: float, iou: float) -> DetectResponse
                 )
             )
 
-    annotated_bgr = result.plot()
-    annotated_rgb = cv2.cvtColor(annotated_bgr, cv2.COLOR_BGR2RGB)
-    ok, png = cv2.imencode(".png", cv2.cvtColor(annotated_rgb, cv2.COLOR_RGB2BGR))
-    if not ok:
-        raise RuntimeError("Failed to encode annotated image")
-    image_b64 = "data:image/png;base64," + base64.b64encode(png.tobytes()).decode("ascii")
+    annotated = image.copy()
+    draw = ImageDraw.Draw(annotated)
+    lw = max(2, int(max(image.size) / 320))
+    for d in detections:
+        draw.rectangle(
+            [d.x, d.y, d.x + d.w, d.y + d.h],
+            outline=(250, 204, 21),
+            width=lw,
+        )
+    buf = io.BytesIO()
+    annotated.save(buf, format="PNG")
+    image_b64 = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
 
     return DetectResponse(
         count=len(detections),
