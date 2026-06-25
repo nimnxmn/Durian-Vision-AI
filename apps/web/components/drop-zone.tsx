@@ -60,7 +60,7 @@ export function DropZone({ files, onFilesChange, disabled }: DropZoneProps) {
       {files.length === 0 ? (
         <>
           <p className="text-sm font-medium">Drop images here or click to browse</p>
-          <p className="text-xs text-muted-foreground">JPEG, PNG, HEIC — nadir view works best</p>
+          <p className="text-xs text-muted-foreground">JPEG, PNG, HEIC</p>
         </>
       ) : (
         <p className="text-sm font-medium">

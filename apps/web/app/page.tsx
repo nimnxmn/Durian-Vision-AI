@@ -113,18 +113,43 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl px-6 py-10 flex-1">
-        <section className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">
-            Count durians from a single canopy photo.
+      <section className="w-full border-b bg-primary/10">
+        <div className="mx-auto max-w-5xl px-6 py-12 flex flex-col gap-6">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
+            Detect and count durians from under-canopy photos.
           </h1>
-          <p className="text-muted-foreground max-w-2xl">
-            A YOLOv8 model trained on 2,800+ annotated instances — 95.7%
-            precision, 91.6% recall, ~66 ms per image. Drop a nadir-view
-            orchard photo and get back bounding boxes, counts, and an annotated
-            preview.
-          </p>
-        </section>
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-10">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">Model performance</p>
+              <div className="flex gap-6">
+                <div>
+                  <div className="text-2xl font-bold tabular-nums">95.7%</div>
+                  <div className="text-xs text-muted-foreground">Precision</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold tabular-nums">91.6%</div>
+                  <div className="text-xs text-muted-foreground">Recall</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold tabular-nums">0.959</div>
+                  <div className="text-xs text-muted-foreground">mAP50</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:border-l sm:pl-10">
+              <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">How to use</p>
+              <p className="text-sm text-muted-foreground max-w-sm">
+                Upload under-canopy durian tree photos — the model marks every
+                visible durian and returns an exact count.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main className="mx-auto w-full max-w-5xl px-6 py-10 flex-1">
 
         <Controls
           files={files}
@@ -178,13 +203,7 @@ export default function Home() {
         {items.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-border/60 py-16 text-center">
             <Upload className="size-10 text-muted-foreground/50" />
-            <div>
-              <p className="font-medium">Ready when you are</p>
-              <p className="mt-1 mx-auto max-w-xs text-sm text-muted-foreground">
-                Works best with photos taken directly below the canopy looking
-                straight up.
-              </p>
-            </div>
+            <p className="font-medium">Ready when you are</p>
           </div>
         )}
 
