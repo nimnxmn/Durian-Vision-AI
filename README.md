@@ -7,7 +7,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 license: mit
-short_description: Detect and count durians from under-canopy photos with a custom YOLOv8 model.
+short_description: Detect and count durians from under-canopy photos.
 ---
 
 # DurianVision AI
