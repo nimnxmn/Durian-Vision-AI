@@ -12,7 +12,7 @@ short_description: Detect and count durians from under-canopy photos.
 
 # DurianVision AI
 
-**Live demo:** https://huggingface.co/spaces/nimnxmn/DurianVisionAI
+**Live demo:** [https://nimnxmn-durianvisionai.hf.space/](https://nimnxmn-durianvisionai.hf.space/)
 
 ![DurianVision AI screenshot](screenshot.png)
 
